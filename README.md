@@ -39,7 +39,7 @@ The site has no server of its own, so the booking form is sent through [Web3Form
 
 - From: `lorenzbaele.be`
 - Subject: `Boekingsaanvraag – <soort event> – <datum>`, e.g. `Boekingsaanvraag – Receptie – 12/06/2027`
-- Fields with Dutch labels: Naam, E-mail, Datum, Soort event, Locatie, Bericht and the visitor's language. Empty optional fields say "Niet opgegeven". The event type is in the visitor's language.
+- Fields with Dutch labels: Naam, E-mail, Datum, Soort event, Locatie, Bericht and the visitor's language. An empty message says "Niet opgegeven". The event type is in the visitor's language.
 - Replying goes straight to the visitor (Web3Forms sets reply-to to their email address).
 
 **Spam**
@@ -56,7 +56,7 @@ Rules live in `RULES` in `main.js`; error texts are the `err…` keys in `TEXTS`
 | E-mail * | must look like an email address, max 254 |
 | Datum * | today up to 3 years ahead (`MAX_YEARS_AHEAD`) |
 | Soort event * | an option must be chosen |
-| Locatie | optional, max 150 |
+| Locatie * | at least 2 characters, max 150 |
 | Bericht | optional, max 2000 |
 
 Maximum lengths are the `maxlength` attributes in `index.html`. Required fields have `required` and `class="is-required"` on their label, which adds the `*`.

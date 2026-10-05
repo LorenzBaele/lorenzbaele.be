@@ -65,7 +65,7 @@
     ],
     "portraitAlt": "Portret van Lorenz Baele met zijn saxofoon",
     "priceLabel": "Prijs",
-    "priceText": "vanaf €200",
+    "priceText": "Vanaf €200",
     "regionText": "Gent en omstreken",
     "revTitle": "Reviews",
     "reviews": [],
@@ -88,6 +88,7 @@
     "notGiven": "Niet opgegeven",
     "formNote": "Velden met * zijn verplicht.",
     "errType": "Kies het soort event.",
+    "errLocation": "Vul de locatie van je event in.",
     "mailSubject": "Boekingsaanvraag",
     "fSending": "Versturen…",
     "formSuccess": "Bedankt! Je aanvraag is verstuurd. Ik laat je snel iets weten.",
@@ -155,7 +156,7 @@
     ],
     "portraitAlt": "Portrait of Lorenz Baele with his saxophone",
     "priceLabel": "Price",
-    "priceText": "from €200",
+    "priceText": "From €200",
     "regionText": "Ghent and surroundings",
     "revTitle": "Reviews",
     "reviews": [],
@@ -178,6 +179,7 @@
     "notGiven": "Not given",
     "formNote": "Fields marked * are required.",
     "errType": "Please choose the type of event.",
+    "errLocation": "Please fill in the location of your event.",
     "mailSubject": "Booking request",
     "fSending": "Sending…",
     "formSuccess": "Thank you! Your request has been sent. I'll get back to you soon.",
@@ -298,7 +300,8 @@
       if (v > range.max) return 'errDateFar';
       return null;
     },
-    type: function (v) { return v ? null : 'errType'; }
+    type: function (v) { return v ? null : 'errType'; },
+    location: function (v) { return v.trim().length >= 2 ? null : 'errLocation'; }
   };
 
   // Shows or clears the message under a field. The message carries data-i18n,
@@ -390,7 +393,7 @@
         'E-mail': f.email.value.trim(),
         'Datum': when,
         'Soort event': type,
-        'Locatie': f.location.value.trim() || TEXTS.nl.notGiven,
+        'Locatie': f.location.value.trim(),
         'Bericht': f.message.value.trim() || TEXTS.nl.notGiven,
         'Taal van de bezoeker': current === 'en' ? 'Engels' : 'Nederlands'
       };

@@ -154,7 +154,7 @@
         <dl class="facts">
           <div><dt data-i18n="lblRegion">Regio</dt><dd data-i18n="regionText">Gent en omstreken</dd></div>
           <div><dt data-i18n="lblSound">Geluid</dt><dd data-i18n="soundText">Eigen geluidsinstallatie</dd></div>
-          <div><dt data-i18n="priceLabel">Prijs</dt><dd data-i18n="priceText">vanaf €200</dd></div>
+          <div><dt data-i18n="priceLabel">Prijs</dt><dd data-i18n="priceText">Vanaf €200</dd></div>
           <div><dt data-i18n="lblEmail">E-mail</dt><dd><a href="mailto:lorenzbaele.booking@gmail.com">lorenzbaele.booking@gmail.com</a></dd></div>
         </dl>
       </div>
@@ -163,7 +163,7 @@
         <div class="field"><label for="f-email" class="is-required" data-i18n="fEmail">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="err-email"><p class="field-error" id="err-email" hidden></p></div>
         <div class="field"><label for="f-date" class="is-required" data-i18n="fDate">Datum van het event</label><div class="date-wrap is-empty"><input id="f-date" name="date" type="date" required aria-describedby="err-date"><span class="date-placeholder" data-i18n="datePlaceholder" aria-hidden="true">Kies een datum</span></div><p class="field-error" id="err-date" hidden></p></div>
         <div class="field"><label for="f-type" class="is-required" data-i18n="fType">Soort event</label><select id="f-type" name="type" data-options="options" required aria-describedby="err-type"></select><p class="field-error" id="err-type" hidden></p></div>
-        <div class="field field-wide"><label for="f-loc" data-i18n="fLoc">Locatie</label><input id="f-loc" name="location" type="text" maxlength="150"></div>
+        <div class="field field-wide"><label for="f-loc" class="is-required" data-i18n="fLoc">Locatie</label><input id="f-loc" name="location" type="text" maxlength="150" required aria-describedby="err-location"><p class="field-error" id="err-location" hidden></p></div>
         <div class="field field-wide"><label for="f-msg" data-i18n="fMsg">Nog iets dat ik moet weten?</label><textarea id="f-msg" name="message" rows="5" maxlength="2000"></textarea></div>
         <!-- Spam trap: hidden from visitors, bots tick it and Web3Forms drops the submission -->
         <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" hidden>
