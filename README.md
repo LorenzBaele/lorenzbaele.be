@@ -7,8 +7,9 @@ Static one-page site (Dutch by default, English via the NL/EN switch).
 - `index.html` — the page
 - `style.css` — all styling
 - `main.js` — texts for both languages, language switch, reviews banner, contact form
-- `lorenz.jpg` — portrait in the "Over mij" section
-- `CNAME` — custom domain for GitHub Pages. Temporarily removed while the lorenzbaele.be DNS is being set up; the site is at https://lorenzbaele.github.io/lorenzbaele.be/ until then.
+- `lorenz-live.jpg` — stage photo in the "Over mij" section (photo: Robbol Photography, credited under the photo)
+- `share.jpg` — 1200×630 preview image when the site is shared on WhatsApp, Facebook, … (`og:image` in `index.html`)
+- `CNAME` — custom domain for GitHub Pages. Temporarily removed while the lorenzbaele.be DNS is being set up; the site is at https://lorenzbaele.github.io/lorenzbaele.be/ until then. When restoring it, also switch `og:image` in `index.html` to `https://lorenzbaele.be/share.jpg`.
 
 ## GitHub Pages
 

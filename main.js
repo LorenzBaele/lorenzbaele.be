@@ -64,7 +64,8 @@
         "label": "Iets anders"
       }
     ],
-    "portraitAlt": "Portret van Lorenz Baele met zijn saxofoon",
+    "portraitAlt": "Lorenz Baele speelt saxofoon op een podium",
+    "photoCredit": "Foto",
     "priceLabel": "Prijs",
     "priceText": "Vanaf €200",
     "regionText": "Gent en omstreken",
@@ -156,7 +157,8 @@
         "label": "Something else"
       }
     ],
-    "portraitAlt": "Portrait of Lorenz Baele with his saxophone",
+    "portraitAlt": "Lorenz Baele playing saxophone on stage",
+    "photoCredit": "Photo",
     "priceLabel": "Price",
     "priceText": "From €200",
     "regionText": "Ghent and surroundings",
@@ -426,6 +428,20 @@
           showText(sendButton, 'fSend');
         });
     });
+  }
+
+  /* ----- Fade in .reveal elements when they scroll into view ----- */
+  if ('IntersectionObserver' in window) {
+    document.documentElement.classList.add('reveal-on');
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { observer.observe(el); });
   }
 
   var saved = null;

@@ -9,7 +9,12 @@
 <meta property="og:title" content="Lorenz Baele — Live saxofoon">
 <meta property="og:description" content="Live saxofoon als achtergrond voor elk moment, in Gent en omstreken.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://lorenzbaele.be/lorenz.jpg">
+<!-- Share image: switch to https://lorenzbaele.be/share.jpg once the domain is back -->
+<meta property="og:image" content="https://lorenzbaele.github.io/lorenzbaele.be/share.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lorenz Baele speelt saxofoon op een podium">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
@@ -140,9 +145,18 @@
 
   <section id="about" class="section section-dark">
     <div class="container about">
-      <img src="lorenz.jpg" alt="Portret van Lorenz Baele met zijn saxofoon" class="portrait" data-i18n-attr="alt:portraitAlt" width="180" height="180">
-      <h2 class="title title-about" data-i18n="aboutTitle">Hoi, ik ben Lorenz.</h2>
-      <p class="about-text" data-i18n="aboutP1"></p>
+      <figure class="about-photo reveal">
+        <div class="about-photo-media">
+          <div class="about-photo-frame">
+            <img src="lorenz-live.jpg" alt="Lorenz Baele speelt saxofoon op een podium" data-i18n-attr="alt:portraitAlt" width="1000" height="1500" loading="lazy">
+          </div>
+        </div>
+        <figcaption><span data-i18n="photoCredit">Foto</span>: Robbol Photography</figcaption>
+      </figure>
+      <div class="about-body reveal">
+        <h2 class="title title-about" data-i18n="aboutTitle">Hoi, ik ben Lorenz.</h2>
+        <p class="about-text" data-i18n="aboutP1"></p>
+      </div>
     </div>
   </section>
 
