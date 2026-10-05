@@ -1,21 +1,186 @@
 <!doctype html>
 <html lang="nl">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Lorenz Baele</title>
-  <meta name="description" content="De persoonlijke website van Lorenz Baele.">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lorenz Baele — Live saxofoon</title>
+<meta name="description" content="Live saxofoon als achtergrond voor elk moment, in Gent en omstreken. Warme muziek die zich aanpast aan jouw evenement.">
+<meta name="theme-color" content="#0F0E0C">
+<meta property="og:title" content="Lorenz Baele — Live saxofoon">
+<meta property="og:description" content="Live saxofoon als achtergrond voor elk moment, in Gent en omstreken.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://lorenzbaele.be/lorenz.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&amp;family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <main>
-    <h1>Lorenz Baele</h1>
-    <p class="lead">Welkom op mijn persoonlijke website.</p>
-    <p class="muted">Deze site is nog in opbouw. Kom binnenkort terug!</p>
-  </main>
-  <footer>
-    <p>&copy; <span id="year">2026</span> Lorenz Baele</p>
-  </footer>
-  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="logo">
+      <span class="logo-name">Lorenz Baele</span>
+      <span class="logo-sub" data-i18n="logoSub">Saxofoon</span>
+    </a>
+    <div class="header-right">
+      <nav class="main-nav" aria-label="Menu">
+        <a href="#occasions" data-i18n="navOcc">Gelegenheden</a>
+        <a href="#videos" data-i18n="navVid" hidden>Video's</a>
+        <a href="#reviews" data-i18n="navRev" hidden>Reviews</a>
+        <a href="#about" data-i18n="navAbout">Over mij</a>
+        <a href="#contact" class="btn btn-gold btn-small" data-i18n="navBook">Boek een datum</a>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="Taal" data-i18n-attr="aria-label:langLabel">
+        <button type="button" data-lang="nl" aria-pressed="true">NL</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <div class="hero-wrap">
+    <div class="bokeh" aria-hidden="true">
+      <span style="left: 60%; top: 4%; width: 220px; height: 220px; opacity: 0.16; filter: blur(47px)"></span>
+      <span style="left: 82%; top: 38%; width: 90px; height: 90px; opacity: 0.22; filter: blur(14px)"></span>
+      <span style="left: 90%; top: 10%; width: 46px; height: 46px; opacity: 0.26; filter: blur(8px)"></span>
+      <span style="left: 70%; top: 72%; width: 150px; height: 150px; opacity: 0.12; filter: blur(32px)"></span>
+      <span style="left: 34%; top: 14%; width: 34px; height: 34px; opacity: 0.18; filter: blur(7px)"></span>
+      <span style="left: 6%; top: 78%; width: 130px; height: 130px; opacity: 0.1; filter: blur(38px)"></span>
+      <span style="left: 12%; top: 26%; width: 170px; height: 170px; opacity: 0.12; filter: blur(48px)"></span>
+    </div>
+    <section id="top" class="container hero">
+      <div class="hero-text">
+        <h1 lang="en" class="title">Sax that sets <em>the mood.</em></h1>
+        <p class="hero-lead" data-i18n="heroLead">Live saxofoon als achtergrond voor elk moment. Warme muziek die zich aanpast aan jouw evenement, van de eerste gast tot het laatste glas.</p>
+        <div class="hero-buttons">
+          <a href="#contact" class="btn btn-gold" data-i18n="ctaPrimary">Check je datum</a>
+          <a href="#videos" class="btn btn-outline" data-i18n="ctaSecondary" hidden>Bekijk video's</a>
+        </div>
+      </div>
+      <!-- Banner video: verborgen tot er een video is, zie README.md -->
+      <div class="hero-media" hidden>
+        <div class="hero-video"></div>
+      </div>
+    </section>
+  </div>
+
+  <section id="occasions" class="section section-light">
+    <div class="container">
+      <div class="section-head">
+        <h2 class="title title-gray" data-i18n="occTitle">Voor elke gelegenheid</h2>
+        <p class="section-lead" data-i18n="occLead">Elke gelegenheid vraagt iets anders en dat bespreken we vooraf samen.</p>
+      </div>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="13" r="5"/><circle cx="15" cy="13" r="5"/></svg></div>
+          <h3 data-i18n="o1t">Huwelijken</h3>
+          <p data-i18n="o1d">Ceremonie, receptie, diner en de openingsdans.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h14l-7 8z"/><path d="M12 12v8"/><path d="M8 20h8"/></svg></div>
+          <h3 data-i18n="o2t">Recepties</h3>
+          <p data-i18n="o2d">Warme, ontspannen sax terwijl je gasten bijpraten.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M9 7h2M13 7h2M9 11h2M13 11h2"/><path d="M10 21v-4h4v4"/></svg></div>
+          <h3 data-i18n="o3t">Bedrijfsevents</h3>
+          <p data-i18n="o3d">Openingen, awards, personeelsfeesten en lanceringen.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></div>
+          <h3 data-i18n="o4t">Hotels &amp; lounges</h3>
+          <p data-i18n="o4d">Ontspannen, jazzy sets voor bars, terrassen en diners.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></div>
+          <h3 data-i18n="o5t">Privéfeesten</h3>
+          <p data-i18n="o5d">Verjaardagen, jubilea — alles wat het vieren waard is.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video's: verborgen tot er video's zijn, zie README.md -->
+  <section id="videos" class="section section-dark" hidden>
+    <div class="container">
+      <h2 class="title"><span data-i18n="vidTitleA">Bekijk me</span> <em data-i18n="vidTitleB">live</em></h2>
+      <p class="videos-lead"><span data-i18n="vidLead">De eerste video's zijn in de maak. Benieuwd hoe het klinkt?</span> <a href="#contact" class="text-link" data-i18n="vidLink">Stuur me een bericht →</a></p>
+      <!-- Video's: vervang een "video-ph" blok door een YouTube-embed, zie README.md -->
+      <div class="videos">
+        <figure class="video-main">
+          <div class="video-ph"><span class="play-ring"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></span></div>
+          <figcaption><span class="video-title video-title-big" data-i18n="v1">Huwelijk — receptie</span><span class="video-meta" data-i18n="vMeta">Video volgt binnenkort</span></figcaption>
+        </figure>
+        <div class="video-side">
+          <figure>
+            <div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></div>
+            <figcaption><span class="video-title" data-i18n="v2">Bedrijfsevent</span><span class="video-meta" data-i18n="vMeta">Video volgt binnenkort</span></figcaption>
+          </figure>
+          <figure>
+            <div class="video-ph"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg></div>
+            <figcaption><span class="video-title" data-i18n="v3">Hotel lounge</span><span class="video-meta" data-i18n="vMeta">Video volgt binnenkort</span></figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews: verborgen tot er echte reviews zijn, zie README.md -->
+  <section id="reviews" class="section section-white" hidden>
+    <div class="container section-head">
+      <h2 class="title title-gray" data-i18n="revTitle">Reviews</h2>
+    </div>
+    <div class="marquee">
+      <div class="marquee-track" id="reviews-track"></div>
+    </div>
+  </section>
+
+  <section id="about" class="section section-dark">
+    <div class="container about">
+      <img src="lorenz.jpg" alt="Portret van Lorenz Baele met zijn saxofoon" class="portrait" data-i18n-attr="alt:portraitAlt" width="180" height="180">
+      <h2 class="title title-about" data-i18n="aboutTitle">Hoi, ik ben Lorenz.</h2>
+      <p class="about-text" data-i18n="aboutP1"></p>
+    </div>
+  </section>
+
+  <section id="contact" class="section section-light">
+    <div class="container contact-inner">
+      <div class="contact-info">
+        <h2 class="title title-gray title-contact"><span data-i18n="contactTitleA">Laten we je</span> <em data-i18n="contactTitleB">avond plannen.</em></h2>
+        <p class="contact-lead" data-i18n="contactLead">Vertel me de datum en het soort event en ik laat je snel iets weten.</p>
+        <dl class="facts">
+          <div><dt data-i18n="lblRegion">Regio</dt><dd data-i18n="regionText">Gent en omstreken</dd></div>
+          <div><dt data-i18n="lblSound">Geluid</dt><dd data-i18n="soundText">Eigen geluidsinstallatie</dd></div>
+          <div><dt data-i18n="priceLabel">Prijs</dt><dd data-i18n="priceText">vanaf €200</dd></div>
+          <div><dt data-i18n="lblEmail">E-mail</dt><dd><a href="mailto:lorenzbaele.booking@gmail.com">lorenzbaele.booking@gmail.com</a></dd></div>
+        </dl>
+      </div>
+      <form class="booking-form" id="booking-form" novalidate>
+        <div class="field"><label for="f-name" data-i18n="fName">Naam</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-email" data-i18n="fEmail">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="f-date" data-i18n="fDate">Datum van het event</label><input id="f-date" name="date" type="date" required></div>
+        <div class="field"><label for="f-time" data-i18n="fTime">Tijdstip</label><select id="f-time" name="time" data-options="timeOptions"></select></div>
+        <div class="field"><label for="f-type" data-i18n="fType">Soort event</label><select id="f-type" name="type" data-options="options"></select></div>
+        <div class="field"><label for="f-loc" data-i18n="fLoc">Locatie</label><input id="f-loc" name="location" type="text"></div>
+        <div class="field field-wide"><label for="f-msg" data-i18n="fMsg">Nog iets dat ik moet weten?</label><textarea id="f-msg" name="message" rows="5"></textarea></div>
+        <p class="form-error field-wide" id="form-error" role="alert" hidden data-i18n="formError">Vul je naam, e-mail en datum in.</p>
+        <div class="field-wide"><button type="submit" class="btn btn-gold" data-i18n="fSend">Verstuur aanvraag</button></div>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <span>© 2026 Lorenz Baele</span>
+    <span data-i18n="footer">Live saxofoon voor events in Gent en omstreken</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
 </body>
 </html>
