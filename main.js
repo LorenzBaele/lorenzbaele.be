@@ -12,12 +12,12 @@
     "ctaPrimary": "Check je datum",
     "ctaSecondary": "Bekijk video's",
     "fDate": "Datum van het event",
+    "datePlaceholder": "Kies een datum",
     "fEmail": "E-mail",
     "fLoc": "Locatie",
     "fMsg": "Nog iets dat ik moet weten?",
     "fName": "Naam",
     "fSend": "Verstuur aanvraag",
-    "fTime": "Tijdstip",
     "fType": "Soort event",
     "footer": "Live saxofoon voor events in Gent en omstreken",
     "heroLead": "Live saxofoon als achtergrond voor elk moment. Warme muziek die zich aanpast aan jouw evenement, van de eerste gast tot het laatste glas.",
@@ -70,17 +70,6 @@
     "revTitle": "Reviews",
     "reviews": [],
     "soundText": "Eigen geluidsinstallatie",
-    "timeOptions": [
-      {
-        "label": "Ochtend"
-      },
-      {
-        "label": "Namiddag"
-      },
-      {
-        "label": "Avond"
-      }
-    ],
     "v1": "Huwelijk — receptie",
     "v2": "Bedrijfsevent",
     "v3": "Hotel lounge",
@@ -90,13 +79,14 @@
     "vidTitleA": "Bekijk me",
     "vidTitleB": "live",
     "pageTitle": "Lorenz Baele — Live saxofoon",
-    "selectPlaceholder": "Kies…",
+    "selectPlaceholder": "Kies een soort event",
     "errName": "Vul je naam in.",
     "errEmail": "Vul een geldig e-mailadres in.",
     "errDate": "Kies de datum van je event.",
     "errDatePast": "Deze datum ligt in het verleden.",
     "errDateFar": "Kies een datum binnen de komende 3 jaar.",
-    "errTime": "Kies een tijdstip.",
+    "notGiven": "Niet opgegeven",
+    "formNote": "Velden met * zijn verplicht.",
     "errType": "Kies het soort event.",
     "mailSubject": "Boekingsaanvraag",
     "fSending": "Versturen…",
@@ -112,12 +102,12 @@
     "ctaPrimary": "Check your date",
     "ctaSecondary": "Watch videos",
     "fDate": "Event date",
+    "datePlaceholder": "Choose a date",
     "fEmail": "Email",
     "fLoc": "Location",
     "fMsg": "Anything else I should know?",
     "fName": "Name",
     "fSend": "Send request",
-    "fTime": "Time of day",
     "fType": "Type of event",
     "footer": "Live saxophone for events in Ghent and surroundings",
     "heroLead": "Live background saxophone for every moment. Warm music that adapts to your event, from the first guest to the last glass.",
@@ -170,17 +160,6 @@
     "revTitle": "Reviews",
     "reviews": [],
     "soundText": "Own sound system",
-    "timeOptions": [
-      {
-        "label": "Morning"
-      },
-      {
-        "label": "Afternoon"
-      },
-      {
-        "label": "Evening"
-      }
-    ],
     "v1": "Wedding — reception",
     "v2": "Corporate event",
     "v3": "Hotel lounge",
@@ -190,13 +169,14 @@
     "vidTitleA": "Watch me",
     "vidTitleB": "live",
     "pageTitle": "Lorenz Baele — Live saxophone",
-    "selectPlaceholder": "Choose…",
+    "selectPlaceholder": "Choose a type of event",
     "errName": "Please fill in your name.",
     "errEmail": "Please enter a valid email address.",
     "errDate": "Please choose the date of your event.",
     "errDatePast": "This date is in the past.",
     "errDateFar": "Please choose a date within the next 3 years.",
-    "errTime": "Please choose a time of day.",
+    "notGiven": "Not given",
+    "formNote": "Fields marked * are required.",
     "errType": "Please choose the type of event.",
     "mailSubject": "Booking request",
     "fSending": "Sending…",
@@ -318,7 +298,6 @@
       if (v > range.max) return 'errDateFar';
       return null;
     },
-    time: function (v) { return v ? null : 'errTime'; },
     type: function (v) { return v ? null : 'errType'; }
   };
 
@@ -345,6 +324,19 @@
     var range = dateRange();
     form.elements.date.min = range.min;
     form.elements.date.max = range.max;
+
+    // The browser's own empty date text (like "dd/mm/yyyy") depends on the visitor's
+    // settings, so it is covered by our own placeholder while the field is empty
+    var dateInput = form.elements.date;
+    function updateDatePlaceholder() {
+      dateInput.parentNode.classList.toggle('is-empty', !dateInput.value);
+    }
+    dateInput.addEventListener('input', updateDatePlaceholder);
+    dateInput.addEventListener('change', updateDatePlaceholder);
+    // Open the calendar when clicking anywhere in the field, not just on the icon
+    dateInput.addEventListener('click', function () {
+      try { dateInput.showPicker(); } catch (e) { /* not supported: the browser's default behaviour applies */ }
+    });
 
     Object.keys(RULES).forEach(function (fieldName) {
       var el = form.elements[fieldName];
@@ -397,10 +389,9 @@
         'Naam': f.name.value.trim(),
         'E-mail': f.email.value.trim(),
         'Datum': when,
-        'Tijdstip': f.time.value,
         'Soort event': type,
-        'Locatie': f.location.value.trim(),
-        'Bericht': f.message.value.trim(),
+        'Locatie': f.location.value.trim() || TEXTS.nl.notGiven,
+        'Bericht': f.message.value.trim() || TEXTS.nl.notGiven,
         'Taal van de bezoeker': current === 'en' ? 'Engels' : 'Nederlands'
       };
 
@@ -417,6 +408,7 @@
         .then(function (json) {
           if (!json.success) throw new Error(json.message);
           form.reset();
+          updateDatePlaceholder();
           fillSelects(TEXTS[current]);
           showStatus('formSuccess', false);
         })

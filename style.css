@@ -241,11 +241,33 @@ section[id] { scroll-margin-top: 16px; }
 .field { display: flex; flex-direction: column; gap: 8px; }
 .field-wide { grid-column: 1 / -1; }
 .field label { font-size: 14px; color: var(--label-on-light); }
+/* Asterisk via CSS, so it survives the language switch replacing the label text */
+.field label.is-required::after { content: " *"; color: var(--gold-dark); font-weight: 700; }
+.form-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; }
+.form-note { margin: 0 0 0 auto; font-size: 14px; color: var(--muted-on-light); }
 .field input, .field select, .field textarea {
   background: var(--white); border: 1px solid var(--line-light); border-radius: 12px;
   color: var(--text-on-light); padding: 14px 16px; color-scheme: light; width: 100%;
 }
 .field textarea { resize: vertical; }
+/* Same height for text, date and select fields, which browsers size differently */
+.field input, .field select { height: 58px; padding-top: 0; padding-bottom: 0; }
+/* Required select still on its placeholder option: grey like a placeholder */
+.field select:invalid { color: var(--muted-on-light); }
+.field select option { color: var(--text-on-light); }
+
+/* Date field: own placeholder over the browser's "dd/mm/yyyy" text while empty */
+.date-wrap { position: relative; }
+.date-wrap input { cursor: pointer; }
+.date-wrap input::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.55; }
+.date-wrap input::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+.date-wrap.is-empty:not(:focus-within) input { color: transparent; }
+.date-placeholder {
+  position: absolute; left: 17px; top: 50%; transform: translateY(-50%);
+  color: var(--muted-on-light); pointer-events: none;
+}
+.date-wrap:not(.is-empty) .date-placeholder,
+.date-wrap:focus-within .date-placeholder { display: none; }
 .field [aria-invalid="true"] { border-color: #B3261E; }
 .field-error { margin: 0; color: #B3261E; font-size: 14px; }
 .form-status { margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--gold-tint); color: var(--text-on-light); }
