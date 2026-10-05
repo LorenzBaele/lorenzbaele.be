@@ -90,9 +90,18 @@
     "vidTitleA": "Bekijk me",
     "vidTitleB": "live",
     "pageTitle": "Lorenz Baele — Live saxofoon",
-    "formError": "Vul je naam, e-mail en datum in.",
+    "selectPlaceholder": "Kies…",
+    "errName": "Vul je naam in.",
+    "errEmail": "Vul een geldig e-mailadres in.",
+    "errDate": "Kies de datum van je event.",
+    "errDatePast": "Deze datum ligt in het verleden.",
+    "errDateFar": "Kies een datum binnen de komende 3 jaar.",
+    "errTime": "Kies een tijdstip.",
+    "errType": "Kies het soort event.",
     "mailSubject": "Boekingsaanvraag",
-    "mailIntro": "Hallo Lorenz,"
+    "fSending": "Versturen…",
+    "formSuccess": "Bedankt! Je aanvraag is verstuurd. Ik laat je snel iets weten.",
+    "formFailed": "Er ging iets mis bij het versturen. Probeer het opnieuw of mail me op lorenzbaele.booking@gmail.com."
   },
   "en": {
     "aboutP1": "I'm a musician from Ghent and I've been playing for more than 15 years. Playing saxophone in the background at all kinds of events brings me a great deal of joy. I love filling the room with the beautiful sound of a saxophone, so conversations get going easily. Besides playing saxophone at events, I also play in several other bands, each with its own style and character. Perhaps they would suit your event nicely too.",
@@ -181,13 +190,24 @@
     "vidTitleA": "Watch me",
     "vidTitleB": "live",
     "pageTitle": "Lorenz Baele — Live saxophone",
-    "formError": "Please fill in your name, email and date.",
+    "selectPlaceholder": "Choose…",
+    "errName": "Please fill in your name.",
+    "errEmail": "Please enter a valid email address.",
+    "errDate": "Please choose the date of your event.",
+    "errDatePast": "This date is in the past.",
+    "errDateFar": "Please choose a date within the next 3 years.",
+    "errTime": "Please choose a time of day.",
+    "errType": "Please choose the type of event.",
     "mailSubject": "Booking request",
-    "mailIntro": "Hi Lorenz,"
+    "fSending": "Sending…",
+    "formSuccess": "Thank you! Your request has been sent. I'll get back to you soon.",
+    "formFailed": "Something went wrong while sending. Please try again or email me at lorenzbaele.booking@gmail.com."
   }
 };
 
-  var BOOKING_EMAIL = 'lorenzbaele.booking@gmail.com';
+  // Web3Forms access key: sends form submissions to lorenzbaele.booking@gmail.com.
+  // It is meant to be public, so it is fine in this file.
+  var WEB3FORMS_KEY = '390736ed-cded-4464-9c2a-9718f4844fd9';
   var STAR = '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>';
   var current = 'nl';
 
@@ -223,12 +243,19 @@
       var list = t[sel.getAttribute('data-options')] || [];
       var idx = sel.selectedIndex;
       sel.innerHTML = '';
+      // Empty first option, so the visitor has to make a choice
+      var placeholder = document.createElement('option');
+      placeholder.value = '';
+      placeholder.textContent = t.selectPlaceholder;
+      placeholder.disabled = true;
+      placeholder.defaultSelected = true;
+      sel.appendChild(placeholder);
       list.forEach(function (o) {
         var opt = document.createElement('option');
         opt.textContent = o.label;
         sel.appendChild(opt);
       });
-      if (idx >= 0 && idx < list.length) sel.selectedIndex = idx;
+      sel.selectedIndex = idx > 0 && idx <= list.length ? idx : 0;
     });
   }
 
@@ -261,54 +288,146 @@
     b.addEventListener('click', function () { setLang(b.getAttribute('data-lang')); });
   });
 
-  /* ----- Booking form: opens the visitor's email app with everything filled in ----- */
+  /* ----- Booking form: validated here, sent through Web3Forms ----- */
   function formatDate(value) {
     var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value || '');
     return m ? m[3] + '/' + m[2] + '/' + m[1] : (value || '');
   }
 
+  // Local date as YYYY-MM-DD, the format of <input type="date">
+  function isoDate(d) {
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+  }
+
+  var MAX_YEARS_AHEAD = 3;
+
+  function dateRange() {
+    var today = new Date();
+    var max = new Date(today.getFullYear() + MAX_YEARS_AHEAD, today.getMonth(), today.getDate());
+    return { min: isoDate(today), max: isoDate(max) };
+  }
+
+  // Each rule returns the TEXTS key of the error message, or null when the value is fine
+  var RULES = {
+    name: function (v) { return v.trim().length >= 2 ? null : 'errName'; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? null : 'errEmail'; },
+    date: function (v) {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(v)) return 'errDate';
+      var range = dateRange();
+      if (v < range.min) return 'errDatePast';
+      if (v > range.max) return 'errDateFar';
+      return null;
+    },
+    time: function (v) { return v ? null : 'errTime'; },
+    type: function (v) { return v ? null : 'errType'; }
+  };
+
+  // Shows or clears the message under a field. The message carries data-i18n,
+  // so switching language translates it along with the rest of the page.
+  function checkField(el) {
+    var key = RULES[el.name](el.value);
+    var msg = document.getElementById('err-' + el.name);
+    el.setAttribute('aria-invalid', String(!!key));
+    if (key) {
+      msg.setAttribute('data-i18n', key);
+      msg.textContent = TEXTS[current][key];
+      msg.hidden = false;
+    } else {
+      msg.removeAttribute('data-i18n');
+      msg.textContent = '';
+      msg.hidden = true;
+    }
+    return !key;
+  }
+
   var form = document.getElementById('booking-form');
   if (form) {
+    var range = dateRange();
+    form.elements.date.min = range.min;
+    form.elements.date.max = range.max;
+
+    Object.keys(RULES).forEach(function (fieldName) {
+      var el = form.elements[fieldName];
+      // Check when leaving a filled-in field; once marked invalid, re-check while correcting
+      el.addEventListener('blur', function () { if (el.value) checkField(el); });
+      el.addEventListener(el.tagName === 'SELECT' ? 'change' : 'input', function () {
+        if (el.getAttribute('aria-invalid') === 'true') checkField(el);
+      });
+    });
+
+    var sendButton = form.querySelector('button[type="submit"]');
+    var status = document.getElementById('form-status');
+    var sending = false;
+
+    // Shows a translated message; data-i18n keeps it in sync when switching language
+    function showText(el, key) {
+      el.setAttribute('data-i18n', key);
+      el.textContent = TEXTS[current][key];
+    }
+
+    function showStatus(key, isError) {
+      showText(status, key);
+      status.classList.toggle('form-status-error', isError);
+      status.hidden = false;
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var t = TEXTS[current];
-      var name = form.elements.name;
-      var email = form.elements.email;
-      var date = form.elements.date;
-      var error = document.getElementById('form-error');
+      if (sending) return;
+      status.hidden = true;
 
-      var invalid = [];
-      if (!name.value.trim()) invalid.push(name);
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) invalid.push(email);
-      if (!date.value) invalid.push(date);
-      [name, email, date].forEach(function (el) {
-        el.setAttribute('aria-invalid', String(invalid.indexOf(el) !== -1));
-      });
+      var invalid = Object.keys(RULES)
+        .map(function (fieldName) { return form.elements[fieldName]; })
+        .filter(function (el) { return !checkField(el); });
       if (invalid.length) {
-        error.hidden = false;
         invalid[0].focus();
         return;
       }
-      error.hidden = true;
 
-      var type = form.elements.type.value;
-      var when = formatDate(date.value);
-      var lines = [
-        t.mailIntro,
-        '',
-        t.fName + ': ' + name.value.trim(),
-        t.fEmail + ': ' + email.value.trim(),
-        t.fDate + ': ' + when,
-        t.fTime + ': ' + form.elements.time.value,
-        t.fType + ': ' + type,
-        t.fLoc + ': ' + form.elements.location.value.trim(),
-        '',
-        form.elements.message.value.trim()
-      ];
-      var subject = t.mailSubject + ' – ' + type + ' – ' + when;
-      window.location.href = 'mailto:' + BOOKING_EMAIL +
-        '?subject=' + encodeURIComponent(subject) +
-        '&body=' + encodeURIComponent(lines.join('\n'));
+      var f = form.elements;
+      var type = f.type.value;
+      var when = formatDate(f.date.value);
+      // Field names become the labels in the email, so they are in Dutch
+      var data = {
+        access_key: WEB3FORMS_KEY,
+        subject: TEXTS.nl.mailSubject + ' – ' + type + ' – ' + when,
+        from_name: 'lorenzbaele.be',
+        replyto: f.email.value.trim(),
+        botcheck: f.botcheck.checked,
+        'Naam': f.name.value.trim(),
+        'E-mail': f.email.value.trim(),
+        'Datum': when,
+        'Tijdstip': f.time.value,
+        'Soort event': type,
+        'Locatie': f.location.value.trim(),
+        'Bericht': f.message.value.trim(),
+        'Taal van de bezoeker': current === 'en' ? 'Engels' : 'Nederlands'
+      };
+
+      sending = true;
+      sendButton.disabled = true;
+      showText(sendButton, 'fSending');
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(data)
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (json) {
+          if (!json.success) throw new Error(json.message);
+          form.reset();
+          fillSelects(TEXTS[current]);
+          showStatus('formSuccess', false);
+        })
+        .catch(function () {
+          showStatus('formFailed', true);
+        })
+        .then(function () {
+          sending = false;
+          sendButton.disabled = false;
+          showText(sendButton, 'fSend');
+        });
     });
   }
 

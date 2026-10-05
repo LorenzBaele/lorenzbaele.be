@@ -246,8 +246,11 @@ section[id] { scroll-margin-top: 16px; }
   color: var(--text-on-light); padding: 14px 16px; color-scheme: light; width: 100%;
 }
 .field textarea { resize: vertical; }
-.field input[aria-invalid="true"] { border-color: #B3261E; }
-.form-error { margin: 0; color: #B3261E; font-size: 15px; }
+.field [aria-invalid="true"] { border-color: #B3261E; }
+.field-error { margin: 0; color: #B3261E; font-size: 14px; }
+.form-status { margin: 0; padding: 14px 16px; border-radius: 12px; background: var(--gold-tint); color: var(--text-on-light); }
+.form-status-error { background: #F9DEDC; color: #8C1D18; }
+.booking-form button[disabled] { opacity: 0.6; cursor: wait; }
 
 /* ----- Footer ----- */
 .site-footer { border-top: 1px solid var(--line-dark); }

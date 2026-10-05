@@ -17,7 +17,7 @@ Repository → Settings → Pages → Deploy from a branch → `main` / `(root)`
 ## Changing things
 
 - **Texts:** in `main.js`, inside `TEXTS` (`nl` and `en`). Change both languages.
-- **Contact form:** it opens the visitor's email app with all fields filled in, addressed to lorenzbaele.booking@gmail.com.
+- **Contact form:** checked in `main.js` (`RULES`) and sent through [Web3Forms](https://web3forms.com) to the email address the access key (`WEB3FORMS_KEY` in `main.js`) was created for. The key is public by design. Free plan: 250 submissions per month.
 
 ## Hidden until there is media
 

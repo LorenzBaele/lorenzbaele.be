@@ -159,15 +159,17 @@
         </dl>
       </div>
       <form class="booking-form" id="booking-form" novalidate>
-        <div class="field"><label for="f-name" data-i18n="fName">Naam</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
-        <div class="field"><label for="f-email" data-i18n="fEmail">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
-        <div class="field"><label for="f-date" data-i18n="fDate">Datum van het event</label><input id="f-date" name="date" type="date" required></div>
-        <div class="field"><label for="f-time" data-i18n="fTime">Tijdstip</label><select id="f-time" name="time" data-options="timeOptions"></select></div>
-        <div class="field"><label for="f-type" data-i18n="fType">Soort event</label><select id="f-type" name="type" data-options="options"></select></div>
-        <div class="field"><label for="f-loc" data-i18n="fLoc">Locatie</label><input id="f-loc" name="location" type="text"></div>
-        <div class="field field-wide"><label for="f-msg" data-i18n="fMsg">Nog iets dat ik moet weten?</label><textarea id="f-msg" name="message" rows="5"></textarea></div>
-        <p class="form-error field-wide" id="form-error" role="alert" hidden data-i18n="formError">Vul je naam, e-mail en datum in.</p>
+        <div class="field"><label for="f-name" data-i18n="fName">Naam</label><input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="err-name"><p class="field-error" id="err-name" hidden></p></div>
+        <div class="field"><label for="f-email" data-i18n="fEmail">E-mail</label><input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="err-email"><p class="field-error" id="err-email" hidden></p></div>
+        <div class="field"><label for="f-date" data-i18n="fDate">Datum van het event</label><input id="f-date" name="date" type="date" required aria-describedby="err-date"><p class="field-error" id="err-date" hidden></p></div>
+        <div class="field"><label for="f-time" data-i18n="fTime">Tijdstip</label><select id="f-time" name="time" data-options="timeOptions" required aria-describedby="err-time"></select><p class="field-error" id="err-time" hidden></p></div>
+        <div class="field"><label for="f-type" data-i18n="fType">Soort event</label><select id="f-type" name="type" data-options="options" required aria-describedby="err-type"></select><p class="field-error" id="err-type" hidden></p></div>
+        <div class="field"><label for="f-loc" data-i18n="fLoc">Locatie</label><input id="f-loc" name="location" type="text" maxlength="150"></div>
+        <div class="field field-wide"><label for="f-msg" data-i18n="fMsg">Nog iets dat ik moet weten?</label><textarea id="f-msg" name="message" rows="5" maxlength="2000"></textarea></div>
+        <!-- Spam trap: hidden from visitors, bots tick it and Web3Forms drops the submission -->
+        <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" hidden>
         <div class="field-wide"><button type="submit" class="btn btn-gold" data-i18n="fSend">Verstuur aanvraag</button></div>
+        <p class="form-status field-wide" id="form-status" role="status" hidden></p>
       </form>
     </div>
   </section>
