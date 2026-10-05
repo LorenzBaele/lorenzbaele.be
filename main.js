@@ -4,7 +4,7 @@
 (function () {
   var TEXTS = {
   "nl": {
-    "aboutP1": "Ik ben een muzikant uit Gent en speel al meer dan 15 jaar. Het brengt me enorm veel plezier om saxofoon te spelen op de achtergrond van verschillende evenementen. Ik vul graag de ruimte met de prachtige klanken van een saxofoon, zodat gesprekken vlot op gang komen. Naast saxofoon spelen op evenementen speel ik ook in verschillende andere bands, elk met hun eigen stijl en karakter. Misschien passen ook die mooi bij uw evenement.",
+    "aboutP1": "Ik ben een muzikant uit Gent en speel al meer dan 15 jaar. Het brengt me enorm veel plezier om saxofoon te spelen op de achtergrond van verschillende evenementen. Ik vul graag de ruimte met de prachtige klanken van een saxofoon, zodat gesprekken vlot op gang komen. Naast saxofoon spelen op evenementen speel ik ook in verschillende andere bands, elk met hun eigen stijl en karakter.",
     "aboutTitle": "Hoi, ik ben Lorenz.",
     "contactLead": "Vertel me de datum en het soort event en ik laat je snel iets weten.",
     "contactTitleA": "Laten we je",
@@ -97,7 +97,7 @@
     "formFailed": "Er ging iets mis bij het versturen. Probeer het opnieuw of mail me op lorenzbaele.booking@gmail.com."
   },
   "en": {
-    "aboutP1": "I'm a musician from Ghent and I've been playing for more than 15 years. Playing saxophone in the background at all kinds of events brings me a great deal of joy. I love filling the room with the beautiful sound of a saxophone, so conversations get going easily. Besides playing saxophone at events, I also play in several other bands, each with its own style and character. Perhaps they would suit your event nicely too.",
+    "aboutP1": "I'm a musician from Ghent and I've been playing for more than 15 years. Playing saxophone in the background at all kinds of events brings me a great deal of joy. I love filling the room with the beautiful sound of a saxophone, so conversations get going easily. Besides playing saxophone at events, I also play in several other bands, each with its own style and character.",
     "aboutTitle": "Hi, I'm Lorenz.",
     "contactLead": "Tell me the date and the kind of event, and I'll get back to you soon.",
     "contactTitleA": "Let's plan your",
