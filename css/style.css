@@ -179,6 +179,16 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 
 .home-gigs { padding-bottom: 48px; }
 
+/* De onderste lijn van Binnenkort loopt over de hele breedte van de pagina */
+.home-gigs .gigs, .home-gigs .empty, .home-gigs .loading { position: relative; }
+.home-gigs .gigs::after, .home-gigs .empty::after, .home-gigs .loading::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 1px;
+  background: var(--lijn); pointer-events: none;
+  /* Een schaduw maakt de pagina niet breder, dus geen horizontaal scrollen */
+  box-shadow: 0 0 0 100vmax var(--lijn); clip-path: inset(0 -100vmax);
+}
+.home-gigs .gigs::after { bottom: 0; }
+
 .bands-head { padding: 16px 0 64px; }
 .inline-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 24px; }
 .inline-head p { margin: 0; font-size: 20px; color: var(--stof); max-width: 44ch; }
