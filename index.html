@@ -3,52 +3,164 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Lorenz Baele</title>
-<meta name="description" content="Nieuwe website binnenkort.">
-<meta name="theme-color" content="#0F0E0C">
+<title>Lorenz Baele, saxofonist en pianist uit Gent</title>
+<meta name="description" content="Saxofonist en pianist uit Gent. Ontdek waar je me binnenkort live kan zien met Undecided Souls, The Logical Dreamers en Dysphunktional.">
+<link rel="canonical" href="https://lorenzbaele.be/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="nl_BE">
+<meta property="og:site_name" content="Lorenz Baele">
+<meta property="og:title" content="Lorenz Baele, saxofonist en pianist uit Gent">
+<meta property="og:description" content="Saxofonist en pianist uit Gent. Ontdek waar je me binnenkort live kan zien met Undecided Souls, The Logical Dreamers en Dysphunktional.">
+<meta property="og:url" content="https://lorenzbaele.be/">
+<meta property="og:image" content="https://lorenzbaele.be/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Lorenz Baele speelt saxofoon">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#17110E">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&amp;family=Manrope:wght@400;500&amp;display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0F0E0C;
-    --text: #F2EDE4;
-    --muted: #A8A094;
-    --line: #3A362F;
-  }
-  * { box-sizing: border-box; margin: 0; }
-  html, body { height: 100%; }
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: Manrope, system-ui, sans-serif;
-    display: grid;
-    place-items: center;
-    padding: 24px 16px;
-    text-align: center;
-  }
-  h1 {
-    font-family: "Bodoni Moda", Georgia, serif;
-    font-weight: 500;
-    font-size: clamp(2.5rem, 9vw, 5rem);
-    letter-spacing: -0.01em;
-    line-height: 1.05;
-  }
-  p {
-    margin-top: 1.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    font-size: 0.95rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-</style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&amp;family=Big+Shoulders+Display:wght@700;800&amp;family=Caveat:wght@700&amp;display=swap">
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <main>
-    <h1>Lorenz Baele</h1>
-    <p>Nieuwe website binnenkort</p>
-  </main>
+<header class="site-header">
+<nav class="wrap nav" aria-label="Hoofdmenu">
+<a class="brand" href="index.html">Lorenz Baele</a>
+<div class="nav-links">
+<a href="index.html" aria-current="page">Home</a>
+<a class="ul-link" href="agenda.html">Agenda</a>
+<a class="ul-link" href="https://saxofoonles.be">Saxofoonles<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H10v5.5"></path><path d="M10 2L2.5 9.5"></path></svg></a>
+</div>
+</nav>
+</header>
+
+<main>
+<section class="hero" id="hero">
+<div class="hero-photo">
+<img class="hero-img" src="img/hero.jpg" alt="Lorenz speelt saxofoon op een donker podium" width="2000" height="1333" fetchpriority="high">
+</div>
+<div class="spot" aria-hidden="true"></div>
+<div class="egg" aria-hidden="true">
+<div class="egg-note">
+<svg width="72" height="56" viewBox="0 0 72 56" fill="none" stroke="#FFE0B0" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M66 6 C 46 6, 22 18, 10 46"></path><path d="M10 46 L 9 33"></path><path d="M10 46 L 21 39"></path></svg>
+Hé! Niet in mijn ogen,<br>ik zit midden in een solo.
+</div>
+</div>
+<div class="wrap hero-text">
+<h1 class="hero-name"><span class="line"><span class="rise">Lorenz</span></span><span class="line"><span class="rise rise-2">Baele</span></span></h1>
+<p class="hero-lead hero-sub">Saxofonist en pianist uit Gent.</p>
+<p class="hero-intro hero-sub">Ontdek waar je me binnenkort live kan zien en lees meer over mijn bands.</p>
+</div>
+</section>
+
+<section class="home-gigs" aria-labelledby="binnenkort">
+<div class="wrap">
+<div class="section-head">
+<div class="title-row">
+<h2 class="h2" id="binnenkort">Binnenkort</h2>
+<p class="hand" data-when-gigs hidden>kom gerust luisteren!</p>
+</div>
+<a class="cta" href="agenda.html">Volledige agenda</a>
+</div>
+<ul class="gigs" data-gigs="home" data-limit="3"></ul>
+<div class="empty" data-empty="none" hidden>
+<p class="empty-title">Er staan nog geen nieuwe optredens gepland.</p>
+<p class="empty-text">Nieuwe data verschijnen hier zodra ze vastliggen.</p>
+</div>
+<noscript><p class="empty-text">Bekijk mijn optredens in de <a href="agenda.html">agenda</a>.</p></noscript>
+</div>
+</section>
+
+<section class="bands-head" aria-labelledby="bands">
+<div class="wrap inline-head">
+<h2 class="h2" id="bands">Drie bands</h2>
+<p>elk met een eigen sound en een ander karakter</p>
+</div>
+</section>
+
+<article class="strip strip--us">
+<div class="wrap strip-inner">
+<img class="strip-img img-us" src="img/undecided-souls.jpg" alt="Sofie en Lorenz van Undecided Souls live, in zwart-wit" width="440" height="330" loading="lazy">
+<div class="strip-text">
+<p class="tagline">Homemade ballads</p>
+<h3 class="strip-name">Undecided Souls</h3>
+<p class="strip-desc">Een Gents duo dat met piano, gitaar en zang Engelstalige muziek maakt over wat vanbinnen speelt maar zelden gezegd wordt.</p>
+<a class="cta" href="https://www.youtube.com/watch?v=HWEquBlLYnY">Bekijk video</a>
+</div>
+</div>
+</article>
+
+<article class="strip strip--ld">
+<div class="wrap strip-inner">
+<img class="strip-img img-ld" src="img/logical-dreamers.jpg" alt="The Logical Dreamers, a tribute to Supertramp" width="440" height="330" loading="lazy" style="object-position: 50% 0">
+<div class="strip-text">
+<p class="tagline">A tribute to Supertramp</p>
+<h3 class="strip-name">The Logical Dreamers</h3>
+<p class="strip-desc">Een muzikale én visuele tribute die je volledig onderdompelt in de wereld van Supertramp.</p>
+<a class="cta" href="https://drive.google.com/file/d/1f67GyU_UE-7TZmZRbokDmF3ag-WsuqEM/preview">Bekijk video</a>
+</div>
+</div>
+</article>
+
+<article class="strip strip--dy">
+<div class="wrap strip-inner">
+<img class="strip-img img-dy" src="img/dysphunktional.jpg" alt="De leden van Dysphunktional rond een grote letter d" width="840" height="631" loading="lazy" style="object-position: 50% 20%">
+<div class="strip-text">
+<p class="tagline">Funk party band</p>
+<h3 class="strip-name">Dysphunktional</h3>
+<p class="strip-desc">Een zevenkoppige liveband met een stevige groove en invloeden uit funk, rock, soul en reggae.</p>
+<a class="cta" href="https://drive.google.com/file/d/1zikRqbkcpyY855sFhWAdUTYrPrX1-PWH/preview">Bekijk video</a>
+</div>
+</div>
+</article>
+
+<article class="strip strip--lb" id="over-mij">
+<div class="wrap strip-inner">
+<img class="strip-img img-lb" src="img/lorenz-piano.jpg" alt="Lorenz speelt piano op een podium" width="787" height="524" loading="lazy">
+<div class="strip-text">
+<p class="tagline">Saxofoon en piano</p>
+<h2 class="strip-name">Over mij</h2>
+<p class="strip-desc">Ik maak muziek sinds mijn zestiende. Ik begon op piano, later kwam de saxofoon erbij. Naast mijn bands geef ik ook met veel plezier saxofoon- en pianoles. Ook op bandkampen geef ik les.</p>
+<a class="cta" href="https://saxofoonles.be">Saxofoonles in Gent</a>
+</div>
+</div>
+</article>
+</main>
+
+<footer class="site-footer">
+<div class="wrap footer-inner">
+<div class="footer-brand">
+<p class="footer-name" style="margin:0">Lorenz Baele</p>
+<p class="footer-legal">© 2026 Lorenz Baele · BTW BE 1026.022.646</p>
+</div>
+<div class="footer-cols">
+<div>
+<h2>Op deze site</h2>
+<ul>
+<li><a class="ul-link" href="index.html">Home</a></li>
+<li><a class="ul-link" href="agenda.html">Agenda</a></li>
+</ul>
+</div>
+<div>
+<h2>Elders</h2>
+<ul>
+<li><a class="ul-link" href="https://saxofoonles.be">saxofoonles.be</a></li>
+<li><a class="ul-link" href="https://www.instagram.com/lorenzbaele/">Instagram</a></li>
+</ul>
+</div>
+<div>
+<h2>Contact</h2>
+<ul>
+<li><a class="ul-link" href="mailto:lorenzbaele.booking@gmail.com">lorenzbaele.booking@gmail.com</a></li>
+</ul>
+</div>
+</div>
+</div>
+</footer>
+<script src="js/optredens.js" defer></script>
+<script src="js/site.js" defer></script>
 </body>
 </html>
