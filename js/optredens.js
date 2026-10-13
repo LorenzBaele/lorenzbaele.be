@@ -221,7 +221,13 @@
     if (!document.querySelector('[data-gigs], [data-past]')) return;
     var state = { filter: 'all', closedYears: {} };
 
+    // Spinner zolang de optredens laden
+    var loading = document.querySelector('[data-loading]');
+    var setLoading = function (on) { if (loading) loading.hidden = !on; };
+    setLoading(true);
+
     load().then(function (gigs) {
+      setLoading(false);
       render(gigs, state.filter, state.closedYears);
 
       var buttons = document.querySelectorAll('.filter[data-filter]');
@@ -235,6 +241,7 @@
         });
       });
     }).catch(function () {
+      setLoading(false);
       var none = document.querySelector('[data-empty="none"]');
       if (none) none.hidden = false;
     });

@@ -218,6 +218,28 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 .empty-title { margin: 0; font-size: 24px; font-weight: 600; line-height: 1.3; }
 .empty-text { margin: 8px 0 0; font-size: 17px; color: var(--stof); max-width: 52ch; }
 
+/* Laden: een draaiende plaat. Verschijnt pas na een fractie zodat hij niet flitst bij snel laden */
+.loading {
+  display: flex; align-items: center; gap: 16px;
+  padding: 40px 0; font-size: 17px; color: var(--stof);
+  border-top: 1px solid var(--lijn); border-bottom: 1px solid var(--lijn);
+  animation: lb-fade-in 0.3s 0.2s ease both;
+}
+.loading[hidden] { display: none; }
+
+.spinner {
+  flex: none; width: 44px; height: 44px; border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--nacht) 0 2px, var(--lamp) 2.5px 9px, transparent 9.5px),
+    conic-gradient(transparent 0 30deg, rgba(255, 238, 214, 0.3) 55deg, transparent 80deg 210deg, rgba(255, 238, 214, 0.3) 235deg, transparent 260deg),
+    repeating-radial-gradient(circle, #3A2E27 0 1px, #110C0A 1.5px 3px);
+  box-shadow: 0 0 0 1px var(--lijn);
+  animation: lb-spin 1.4s linear infinite;
+}
+
+@keyframes lb-spin { to { transform: rotate(360deg); } }
+@keyframes lb-fade-in { from { opacity: 0; } to { opacity: 1; } }
+
 /* ---------- Band-stroken ---------- */
 
 .strip-inner {
@@ -313,7 +335,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 }
 .h2-sm.muted { color: var(--stof); margin-top: 112px; }
 
-.agenda .gigs, .agenda .empty { margin-top: 16px; }
+.agenda .gigs, .agenda .empty, .agenda .loading { margin-top: 16px; }
 .band-note { margin: 16px 0 0; font-size: 20px; color: var(--stof); max-width: 44ch; }
 
 .year-toggle {
@@ -384,6 +406,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 @media (prefers-reduced-motion: reduce) {
   .gig, .strip-img, .ul-link, .cta, .band-tag .sw { transition: none; }
   .gig:hover, .strip-img:hover { transform: none; animation: none; }
+  .spinner { animation-duration: 4s; }
 }
 
 /* ---------- Kleine schermen ---------- */
