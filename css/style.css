@@ -128,9 +128,19 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 }
 .spot {
   mix-blend-mode: screen;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
-  background: radial-gradient(380px circle at var(--lx, 50%) var(--ly, 62%), rgba(255, 206, 140, 0.24), rgba(255, 206, 140, 0.06) 45%, transparent 70%);
+  /* Het radiale masker houdt de korrel bij de lichtbundel */
+  -webkit-mask-image: radial-gradient(420px circle at var(--lx, 50%) var(--ly, 62%), #000 80%, transparent 100%), linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: radial-gradient(420px circle at var(--lx, 50%) var(--ly, 62%), #000 80%, transparent 100%), linear-gradient(to bottom, #000 0%, #000 82%, transparent 100%);
+  mask-composite: intersect;
+  /* Fijne korrel tegen strepen (banding), daaronder een lichtbundel die zacht naar nul afloopt */
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 .05 0 0 0 -.021'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)'/%3E%3C/svg%3E") 0 0 / 200px 200px,
+    radial-gradient(340px circle at var(--lx, 50%) var(--ly, 62%),
+      rgba(255, 206, 140, 0.24), rgba(255, 206, 140, 0.227) 10%, rgba(255, 206, 140, 0.193) 20%,
+      rgba(255, 206, 140, 0.146) 30%, rgba(255, 206, 140, 0.1) 40%, rgba(255, 206, 140, 0.061) 50%,
+      rgba(255, 206, 140, 0.033) 60%, rgba(255, 206, 140, 0.016) 70%, rgba(255, 206, 140, 0.007) 80%,
+      rgba(255, 206, 140, 0.003) 90%, rgba(255, 206, 140, 0) 100%);
 }
 .egg {
   -webkit-mask-image: radial-gradient(190px circle at var(--lx, 50%) var(--ly, 62%), #000 30%, transparent 100%);
@@ -388,10 +398,12 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 /* ---------- Beweging bij het laden en scrollen ---------- */
 
 @media (prefers-reduced-motion: no-preference) {
-  .hero-name .rise { animation: lb-rise 1.25s cubic-bezier(.2,.8,.2,1) both; }
-  .hero-name .rise-2 { animation-delay: 0.2s; }
-  .hero-sub .slide { animation: lb-slide 1.5s cubic-bezier(.2,.8,.2,1) both; }
-  .hero-intro .slide { animation-duration: 2s; animation-delay: 0.2s; }
+  /* Titel en subtekst starten verspringend maar landen samen rond 0,9s.
+     De titel staat zichtbaar stil na ~65% van zijn animatie, de subtekst (die verder schuift) pas na ~95%. */
+  .hero-name .rise { animation: lb-rise 1.3s cubic-bezier(.2,.8,.2,1) both; }
+  .hero-name .rise-2 { animation-duration: 1s; animation-delay: 0.2s; }
+  .hero-sub .slide { animation: lb-slide 0.9s cubic-bezier(.3,.6,.55,.95) both; }
+  .hero-intro .slide { animation-duration: 0.7s; animation-delay: 0.2s; }
   .hero-img { animation: lb-photo 2.5s cubic-bezier(.2,.8,.2,1) both; }
 
   @supports (animation-timeline: view()) {
