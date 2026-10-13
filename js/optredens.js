@@ -128,9 +128,9 @@
     var d = gig.date;
     var stub = el('time', 'stub');
     stub.setAttribute('datetime', d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + (gig.time ? 'T' + gig.time : ''));
-    stub.appendChild(el('span', 'stub-mon', MONTHS[d.getMonth()]));
-    stub.appendChild(el('span', 'stub-day', pad(d.getDate())));
     stub.appendChild(el('span', 'stub-wd', DAYS[d.getDay()]));
+    stub.appendChild(el('span', 'stub-day', pad(d.getDate())));
+    stub.appendChild(el('span', 'stub-mon', MONTHS[d.getMonth()]));
     if (gig.time) stub.appendChild(el('span', 'stub-time', gig.time));
     li.appendChild(stub);
     li.appendChild(info(gig));
