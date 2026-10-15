@@ -1,29 +1,30 @@
-Date,Time,Band,Project,Venue,Location
-08-03-2024,,Ander project,Spring!,De Werf,Aalst
-09-03-2024,,Ander project,Spring!,De Werf,Aalst
-27-04-2024,,Undecided Souls,Lokale Helden,CC Den Hoogen Pad,Maldegem
-03-05-2024,,Undecided Souls,Caféshow,De Rus,Maldegem
-16-08-2024,,Ander project,Trouwfeest,Kattebroek,Dilbeek
-30-11-2024,,Undecided Souls,Caféshow,GenX Recordstore,Gent
-23-05-2025,,Ander project,Wijkfeest,Oliemolen,Aalst
-07-06-2025,,Dysphunktional,Impe Lekker Dorp,Onder de kerktoren,Impe
-29-06-2025,,Dysphunktional,Kermis,Onder de kerktoren,Gontrode
-06-07-2025,,Undecided Souls,Zomerbar,Huysmanhoeve,Eeklo
-29-08-2025,,Undecided Souls,Tuinconcert,Citadelpark,Gent
-28-09-2025,,Undecided Souls,Aperitiefconcert,Kermis,Maldegem
-10-01-2026,,Undecided Souls,GiGi Nieuwjaar,Asgaard,Gent
-24-01-2026,,Dysphunktional,Verjaardagsshow,Baardman,Erondegem
-14-02-2026,,Ander project,GiGi Valentines,Asgaard,Gent
-04-04-2026,,The Logical Dreamers,Tribute Show,The Crossover Music Pub,Gent
-08-05-2026,,Ander project,GiGi Viking,Asgaard,Gent
-27-06-2026,,Dysphunktional,Zomerjaarmarkt,Zomerjaarmarkt,Sint-Lievens-Houtem
-11-07-2026,,Dysphunktional,Trouwfeest,,Oudenaarde
-20-07-2026,,Ander project,GiGi Gentse Feesten,Magenta,Gent
-26-07-2026,,Dysphunktional,Caféshow,'t Uilenkot,Herzele
-14-08-2026,,Dysphunktional,Patersholfeesten,Patershol,Gent
-22-08-2026,,The Logical Dreamers,Tribute Show,B52 Music Pub,Ichtegem
-29-08-2026,,Ander project,Trouwfeest,De Mooie Molen,Oudenaarde
-05-09-2026,,Dysphunktional,Kermis,Lolpop,Wichelen
-01-11-2026,17:00,Ander project,GiGi Halloween,Asgaard,Gent
-21-11-2026,21:00,Undecided Souls,EP Release Tour,VONK,Gent
-05-12-2026,11:00,Undecided Souls,EP Release Tour,Hermeline,Lochristi
+Date,Time,Band,Project,Venue,Location,Private,Tickets
+08-03-2024,,Ander project,Spring!,De Werf,Aalst,,
+09-03-2024,,Ander project,Spring!,De Werf,Aalst,,
+27-04-2024,,Undecided Souls,Lokale Helden,CC Den Hoogen Pad,Maldegem,,
+03-05-2024,,Undecided Souls,Caféshow,De Rus,Maldegem,,
+16-08-2024,,Ander project,Trouwfeest,Kattebroek,Dilbeek,TRUE,
+30-11-2024,,Undecided Souls,Caféshow,GenX Recordstore,Gent,,
+23-05-2025,,Ander project,Wijkfeest,Oliemolen,Aalst,,
+07-06-2025,,Dysphunktional,Impe Lekker Dorp,Onder de kerktoren,Impe,,
+29-06-2025,,Dysphunktional,Kermis,Onder de kerktoren,Gontrode,,
+06-07-2025,,Undecided Souls,Zomerbar,Huysmanhoeve,Eeklo,,
+29-08-2025,,Undecided Souls,Tuinconcert,Citadelpark,Gent,,
+28-09-2025,,Undecided Souls,Aperitiefconcert,Kermis,Maldegem,,
+10-01-2026,,Undecided Souls,Garters and Giggles - Black and Sprakly,Asgaard,Gent,,
+24-01-2026,,Dysphunktional,Verjaardagsshow,Baardman,Erondegem,,
+14-02-2026,,Ander project,Garters and Giggles -  Naughty Night Out,Asgaard,Gent,,
+04-04-2026,,The Logical Dreamers,Supertramp Tribute,The Crossover Music Pub,Gent,,
+08-05-2026,,Ander project,Garters and Giggles -  Freya's Forbidden Follies,Asgaard,Gent,,
+27-06-2026,,Dysphunktional,Zomerjaarmarkt,Zomerjaarmarkt,Sint-Lievens-Houtem,,
+11-07-2026,,Dysphunktional,Trouwfeest,,Oudenaarde,,
+20-07-2026,,Ander project,Garters and Giggles -  From GiGi With Love,Magenta,Gent,,
+26-07-2026,,Dysphunktional,Caféshow,’t Uilenkot,Herzele,,
+14-08-2026,,Dysphunktional,Patersholfeesten,Patershol,Gent,,
+22-08-2026,,The Logical Dreamers,Supertramp Tribute,B52 Music Pub,Ichtegem,,
+29-08-2026,,Ander project,Trouwfeest,De Mooie Molen,Oudenaarde,TRUE,
+05-09-2026,,Dysphunktional,Kermis,Lolpop,Wichelen,,
+01-11-2026,17:00,Ander project,Garters and Giggles -  Cabinet of Curiosities,Asgaard,Gent,,https://asgaard.anykrowd.app/#/events/583
+21-11-2026,21:00,Undecided Souls,Changing Roads - EP Release Tour,VONK,Gent,,
+05-12-2026,11:00,Undecided Souls,Changing Roads - EP Release Tour,,Lochristi,TRUE,
+17-12-2026,20:00,Ander project,Big Band,Toreke,Gent,,

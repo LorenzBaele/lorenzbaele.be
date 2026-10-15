@@ -5,7 +5,13 @@
  * gepubliceerd als CSV. Plak die link hieronder bij SHEET_CSV_URL.
  * Zolang die leeg is (of niet bereikbaar), leest de site data/optredens.csv.
  *
- * Kolommen: Date (dd-mm-jjjj), Time (uu:mm), Band, Project, Venue, Location
+ * Kolommen: Date (dd-mm-jjjj), Time (uu:mm), Band, Project, Venue, Location,
+ * en optioneel Private (TRUE bij een privéfeest), Tickets (link naar de ticketverkoop)
+ * en Maps (link naar de locatie).
+ * Zonder Maps-link maakt de site zelf een Google Maps-link uit Venue en Location.
+ * Bij komende optredens (home en agenda) staat de band boven de titel (niet bij een ander
+ * project) en linkt de plaats, met een speldje, naar de kaart (niet bij een privéfeest).
+ * Rechts staat de ticketknop, "Privéfeest" of, zonder ticketlink, "Gratis inkom".
  * Een optreden staat bij "Binnenkort" tot en met de dag zelf en schuift daarna
  * vanzelf naar "Eerder".
  */
@@ -60,12 +66,21 @@
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
+  // Alleen echte webadressen; "www.site.be" of "site.be/tickets" krijgt https:// ervoor
+  function parseUrl(value) {
+    var v = (value || '').trim();
+    if (/^https?:\/\/\S+$/i.test(v)) return v;
+    if (/^[a-z0-9-]+(\.[a-z0-9-]+)+(\/\S*)?$/i.test(v)) return 'https://' + v;
+    return '';
+  }
+
   function toGigs(rows) {
     if (!rows.length) return [];
     var head = rows[0].map(function (h) { return h.trim().toLowerCase(); });
     var col = function (name) { return head.indexOf(name); };
     var iDate = col('date'), iTime = col('time'), iBand = col('band'),
-        iProject = col('project'), iVenue = col('venue'), iLocation = col('location');
+        iProject = col('project'), iVenue = col('venue'), iLocation = col('location'),
+        iTickets = col('tickets'), iMaps = col('maps'), iPrivate = col('private');
 
     return rows.slice(1).map(function (r) {
       var get = function (i) { return i >= 0 && r[i] ? r[i].trim() : ''; };
@@ -74,13 +89,25 @@
       var band = BANDS[get(iBand).toLowerCase()] || OTHER;
       var project = get(iProject);
       var venue = get(iVenue);
+      var location = get(iLocation);
+      // Zonder zaal (bv. een trouwfeest met alleen een gemeente) geen kaartlink
+      var map = parseUrl(get(iMaps)) || (venue ? 'https://www.google.com/maps/search/?api=1&query=' +
+                encodeURIComponent([venue, location].filter(Boolean).join(', ')) : '');
       if (venue && venue.toLowerCase() === project.toLowerCase()) venue = '';
+      var isPrivate = /^(true|waar|ja|yes|x|1)$/i.test(get(iPrivate));
+      var tickets = isPrivate ? '' : parseUrl(get(iTickets));
       return {
         date: date,
         time: parseTime(get(iTime)),
         band: band,
         event: project,
-        place: [venue, get(iLocation)].filter(Boolean).join(', ')
+        place: [venue, location].filter(Boolean).join(', '),
+        // Een privéfeest krijgt geen kaartlink: daar ga je niet zomaar naartoe
+        map: isPrivate ? '' : map,
+        tickets: tickets,
+        isPrivate: isPrivate,
+        // Gratis inkom alleen als de sheet een Tickets-kolom heeft en die leeg is
+        free: !isPrivate && iTickets >= 0 && !tickets
       };
     }).filter(Boolean);
   }
@@ -116,11 +143,52 @@
     return p;
   }
 
-  function info(gig) {
+  var ARROW = '<svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 2H10v5.5"></path><path d="M10 2L2.5 9.5"></path></svg>';
+
+  function button(cls, href, text, label) {
+    var a = el('a', 'gig-btn ' + cls, text);
+    a.href = href;
+    a.setAttribute('aria-label', label);
+    a.insertAdjacentHTML('beforeend', ARROW);
+    return a;
+  }
+
+  var PIN = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>';
+
+  // Bij komende optredens staat de band boven de titel (een ander project krijgt geen label)
+  // en is de plaats, met een speldje ervoor, de link naar de kaart
+  function info(gig, upcoming) {
     var div = el('div', 'gig-info');
+    if (upcoming && gig.band.color) div.appendChild(bandTag(gig.band));
     div.appendChild(el('p', 'gig-event', gig.event));
-    if (gig.place) div.appendChild(el('p', 'gig-place', gig.place));
+    if (upcoming && gig.map) {
+      var place = el('p', 'gig-place');
+      var a = el('a', 'gig-place-link');
+      a.href = gig.map;
+      a.setAttribute('aria-label', (gig.place || 'Locatie van ' + gig.event) + ' op de kaart');
+      a.insertAdjacentHTML('beforeend', PIN);
+      a.appendChild(el('span', null, gig.place || 'Locatie'));
+      place.appendChild(a);
+      div.appendChild(place);
+    } else if (gig.place) {
+      div.appendChild(el('p', 'gig-place', gig.place));
+    }
     return div;
+  }
+
+  // Rechts op de kaart: de ticketknop, of een label voor privéfeest of gratis inkom
+  function action(gig) {
+    var p = el('p', 'gig-action');
+    if (gig.tickets) {
+      p.appendChild(button('gig-btn--ticket', gig.tickets, 'Tickets', 'Tickets voor ' + gig.event + (gig.place ? ', ' + gig.place : '')));
+    } else if (gig.isPrivate) {
+      p.appendChild(el('span', 'gig-note', 'Privéfeest'));
+    } else if (gig.free) {
+      p.appendChild(el('span', 'gig-note gig-note--free', 'Gratis inkom'));
+    } else {
+      return null;
+    }
+    return p;
   }
 
   function upcomingItem(gig) {
@@ -133,8 +201,9 @@
     stub.appendChild(el('span', 'stub-mon', MONTHS[d.getMonth()]));
     if (gig.time) stub.appendChild(el('span', 'stub-time', gig.time));
     li.appendChild(stub);
-    li.appendChild(info(gig));
-    li.appendChild(bandTag(gig.band));
+    li.appendChild(info(gig, true));
+    var act = action(gig);
+    if (act) li.appendChild(act);
     return li;
   }
 
