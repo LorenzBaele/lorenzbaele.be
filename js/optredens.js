@@ -9,8 +9,8 @@
  * en optioneel Private (TRUE bij een privéfeest), Tickets (link naar de ticketverkoop)
  * en Maps (link naar de locatie).
  * Zonder Maps-link maakt de site zelf een Google Maps-link uit Venue en Location.
- * Bij komende optredens (home en agenda) staat de band boven de titel (niet bij een ander
- * project) en linkt de plaats, met een speldje, naar de kaart (niet bij een privéfeest).
+ * Bij komende optredens (home en agenda) staat de band boven de titel (andere bands met hun
+ * eigen naam) en linkt de plaats, met een speldje, naar de kaart (niet bij een privéfeest).
  * Rechts staat de ticketknop, "Privéfeest" of, zonder ticketlink, "Gratis inkom".
  * Een optreden staat bij "Binnenkort" tot en met de dag zelf en schuift daarna
  * vanzelf naar "Eerder".
@@ -26,7 +26,8 @@
     'the logical dreamers': { key: 'ld', name: 'The Logical Dreamers', color: '#4A93CF' },
     'dysphunktional': { key: 'dy', name: 'Dysphunktional', color: '#D9692E' }
   };
-  var OTHER = { key: 'andere', name: 'Ander project', color: null };
+  // Andere bands staan met hun eigen naam op de site, zonder kleur, en vallen onder de filter "Andere projecten"
+  function otherBand(name) { return { key: 'andere', name: name || 'Ander project', color: null }; }
 
   var MONTHS = ['jan', 'feb', 'mrt', 'apr', 'mei', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
   var DAYS = ['zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag'];
@@ -86,7 +87,7 @@
       var get = function (i) { return i >= 0 && r[i] ? r[i].trim() : ''; };
       var date = parseDate(get(iDate));
       if (!date) return null;
-      var band = BANDS[get(iBand).toLowerCase()] || OTHER;
+      var band = BANDS[get(iBand).toLowerCase()] || otherBand(get(iBand));
       var project = get(iProject);
       var venue = get(iVenue);
       var location = get(iLocation);
@@ -155,11 +156,11 @@
 
   var PIN = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"></path><circle cx="12" cy="9.5" r="2.5"></circle></svg>';
 
-  // Bij komende optredens staat de band boven de titel (een ander project krijgt geen label)
+  // Bij komende optredens staat de band boven de titel (andere bands zonder kleurblokje)
   // en is de plaats, met een speldje ervoor, de link naar de kaart
   function info(gig, upcoming) {
     var div = el('div', 'gig-info');
-    if (upcoming && gig.band.color) div.appendChild(bandTag(gig.band));
+    if (upcoming) div.appendChild(bandTag(gig.band));
     div.appendChild(el('p', 'gig-event', gig.event));
     if (upcoming && gig.map) {
       var place = el('p', 'gig-place');

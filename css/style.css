@@ -261,6 +261,7 @@ a:focus-visible, button:focus-visible { outline: 2px solid var(--lamp); outline-
 /* Bij komende optredens staat de band klein boven de titel */
 .gig .band-tag { width: fit-content; margin: 0 0 6px; font-size: 15px; gap: 8px; letter-spacing: 0.02em; }
 .gig .band-tag .sw { width: 12px; height: 12px; }
+.gig .band-tag--other .sw { display: none; }
 
 /* Bij hover springt alleen de band even op; een ander project blijft stil staan */
 .gig .band-tag:not(.band-tag--other) { transition: transform 0.35s cubic-bezier(.34,1.56,.64,1); }

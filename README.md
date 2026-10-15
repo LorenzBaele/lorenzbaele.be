@@ -21,7 +21,7 @@ All gigs are read from one source, in `js/optredens.js`:
 - As long as that's empty, the site reads `data/optredens.csv`.
 
 Columns: `Date, Time, Band, Project, Venue, Location` (date as dd-mm-yyyy, time as hh:mm).
-Optional: `Private` (TRUE for a private party), `Tickets` (link to the ticket sale) and `Maps` (link to the venue). Without a `Maps` link, the site builds a Google Maps link from Venue and Location (only when Venue is filled in). For upcoming gigs (Home and Agenda), the band shows above the title (not for other projects), the venue (with a map pin) links to the map, and the right side of the card shows one of:
+Optional: `Private` (TRUE for a private party), `Tickets` (link to the ticket sale) and `Maps` (link to the venue). Without a `Maps` link, the site builds a Google Maps link from Venue and Location (only when Venue is filled in). For upcoming gigs (Home and Agenda), the band shows above the title (other bands with their own name, without a color), the venue (with a map pin) links to the map, and the right side of the card shows one of:
 
 - a Tickets button, when `Tickets` has a link
 - "Privéfeest", when `Private` is TRUE (no map or ticket link then)
@@ -32,15 +32,18 @@ The "Website" tab of the sheet builds these columns from the "Performances" tab 
 ```
 =ARRAYFORMULA(LET(
   d, FILTER(Performances!A2:K, Performances!A2:A<>""),
-  band, CHOOSECOLS(d, 3),
+  hide, CHOOSECOLS(d, 10) * (CHOOSECOLS(d, 1) >= TODAY()),
   VSTACK(
     HSTACK("Date", "Time", "Band", "Project", "Venue", "Location", "Private", "Tickets"),
     HSTACK(
-      CHOOSECOLS(d, 1, 2),
-      IF(REGEXMATCH(band, "^(Undecided Souls|The Logical Dreamers|Dysphunktional)$"), band, "Ander project"),
-      CHOOSECOLS(d, 4, 5, 6, 10, 11)
+      CHOOSECOLS(d, 1, 2, 3, 4),
+      IF(hide, "", CHOOSECOLS(d, 5)),
+      CHOOSECOLS(d, 6, 10, 11)
     )
   )
 ))
 ```
-A gig stays under "Binnenkort" up to and including its date, then moves to "Eerder" by itself. Bands other than your three main bands are shown as "Ander project".
+
+The venue of an upcoming private gig is left out of the published data, so it never appears online before the gig. Set File > Settings > Calculation to "On change and every hour" so it comes back after the gig.
+
+A gig stays under "Binnenkort" up to and including its date, then moves to "Eerder" by itself. Your three main bands get their color; other bands show with their own name, without a color, and fall under the "Andere projecten" filter.
