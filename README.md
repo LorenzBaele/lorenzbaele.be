@@ -52,5 +52,5 @@ A gig stays under "Binnenkort" up to and including its date, then moves to "Eerd
 
 - `index.html` carries `Person` and `WebSite` structured data (JSON-LD in the head). Update it when the bands, Instagram or e-mail change.
 - `js/optredens.js` adds every upcoming public gig shown on the page as a `MusicEvent`, so Google can list it under events. Private gigs are left out. Check a page with Google's [Rich Results Test](https://search.google.com/test/rich-results).
-- Icons: `favicon.svg` for browsers, `favicon.ico` (48 px) for Google and older browsers, `img/apple-touch-icon.png` for phone home screens.
+- Icons: `favicon.ico` holds the rounded-square LB at 16 and 32 px for browser tabs and a round LB badge at 48 px; `img/favicon.png` is that round badge at 192 px. Google only uses icons of 48 px or larger, so it gets the round badge. There is deliberately no SVG icon: Google's copy of the old SVG had white instead of transparent corners, so it showed small inside a white circle. `img/apple-touch-icon.png` is for phone home screens.
 - Search Console is verified through a DNS TXT record; submit `https://lorenzbaele.be/sitemap.xml` there.
