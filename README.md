@@ -47,3 +47,10 @@ The "Website" tab of the sheet builds these columns from the "Performances" tab 
 The venue of an upcoming private gig is left out of the published data, so it never appears online before the gig. Set File > Settings > Calculation to "On change and every hour" so it comes back after the gig.
 
 A gig stays under "Binnenkort" up to and including its date, then moves to "Eerder" by itself. Your three main bands get their color; other bands show with their own name, without a color, and fall under the "Andere projecten" filter.
+
+## SEO
+
+- `index.html` carries `Person` and `WebSite` structured data (JSON-LD in the head). Update it when the bands, Instagram or e-mail change.
+- `js/optredens.js` adds every upcoming public gig shown on the page as a `MusicEvent`, so Google can list it under events. Private gigs are left out. Check a page with Google's [Rich Results Test](https://search.google.com/test/rich-results).
+- Icons: `favicon.svg` for browsers, `favicon.ico` (48 px) for Google and older browsers, `img/apple-touch-icon.png` for phone home screens.
+- Search Console is verified through a DNS TXT record; submit `https://lorenzbaele.be/sitemap.xml` there.

@@ -14,6 +14,8 @@
  * Rechts staat de ticketknop, "Privéfeest" of, zonder ticketlink, "Gratis inkom".
  * Een optreden staat bij "Binnenkort" tot en met de dag zelf en schuift daarna
  * vanzelf naar "Eerder".
+ * De komende openbare optredens op de pagina komen ook als gestructureerde data
+ * (MusicEvent) in de head, zodat Google ze bij de zoekresultaten kan tonen.
  */
 (function () {
   'use strict';
@@ -22,9 +24,9 @@
   var LOCAL_CSV_URL = 'data/optredens.csv';
 
   var BANDS = {
-    'undecided souls': { key: 'us', name: 'Undecided Souls', color: '#ECE4D8' },
-    'the logical dreamers': { key: 'ld', name: 'The Logical Dreamers', color: '#4A93CF' },
-    'dysphunktional': { key: 'dy', name: 'Dysphunktional', color: '#D9692E' }
+    'undecided souls': { key: 'us', name: 'Undecided Souls', color: '#ECE4D8', image: 'undecided-souls.jpg' },
+    'the logical dreamers': { key: 'ld', name: 'The Logical Dreamers', color: '#4A93CF', image: 'logical-dreamers.jpg' },
+    'dysphunktional': { key: 'dy', name: 'Dysphunktional', color: '#D9692E', image: 'dysphunktional.jpg' }
   };
   // Andere bands staan met hun eigen naam op de site, zonder kleur, en vallen onder de filter "Andere projecten"
   function otherBand(name) { return { key: 'andere', name: name || 'Ander project', color: null }; }
@@ -67,6 +69,8 @@
 
   function pad(n) { return n < 10 ? '0' + n : '' + n; }
 
+  function isoDate(d) { return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()); }
+
   // Alleen echte webadressen; "www.site.be" of "site.be/tickets" krijgt https:// ervoor
   function parseUrl(value) {
     var v = (value || '').trim();
@@ -102,6 +106,8 @@
         time: parseTime(get(iTime)),
         band: band,
         event: project,
+        venue: venue,
+        city: location,
         place: [venue, location].filter(Boolean).join(', '),
         // Een privéfeest krijgt geen kaartlink: daar ga je niet zomaar naartoe
         map: isPrivate ? '' : map,
@@ -196,7 +202,7 @@
     var li = el('li', 'gig');
     var d = gig.date;
     var stub = el('time', 'stub');
-    stub.setAttribute('datetime', d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate()) + (gig.time ? 'T' + gig.time : ''));
+    stub.setAttribute('datetime', isoDate(d) + (gig.time ? 'T' + gig.time : ''));
     stub.appendChild(el('span', 'stub-wd', DAYS[d.getDay()]));
     stub.appendChild(el('span', 'stub-day', pad(d.getDate())));
     stub.appendChild(el('span', 'stub-mon', MONTHS[d.getMonth()]));
@@ -219,11 +225,21 @@
 
   var CHEVRON = '<svg aria-hidden="true" width="14" height="14" viewBox="0 0 14 14"><path d="M3 5 L7 9 L11 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
 
-  function render(all, filter, closedYears) {
+  function startOfToday() {
     var today = new Date(); today.setHours(0, 0, 0, 0);
+    return today;
+  }
+
+  function upcomingOf(all) {
+    var today = startOfToday();
+    return all.filter(function (g) { return g.date >= today; })
+              .sort(function (a, b) { return a.date - b.date || a.time.localeCompare(b.time); });
+  }
+
+  function render(all, filter, closedYears) {
+    var today = startOfToday();
     var keep = function (g) { return filter === 'all' || g.band.key === filter; };
-    var upcomingAll = all.filter(function (g) { return g.date >= today; })
-                         .sort(function (a, b) { return a.date - b.date || a.time.localeCompare(b.time); });
+    var upcomingAll = upcomingOf(all);
     var upcoming = upcomingAll.filter(keep);
     var past = all.filter(function (g) { return g.date < today && keep(g); })
                   .sort(function (a, b) { return b.date - a.date; });
@@ -287,6 +303,57 @@
     }
   }
 
+  // ---------- Gestructureerde data voor Google ----------
+
+  var SITE = 'https://lorenzbaele.be/';
+
+  // Belgische tijd: zomertijd van de laatste zondag van maart tot de laatste zondag van oktober
+  function brusselsOffset(d) {
+    var y = d.getFullYear();
+    var lastSunday = function (month) { var x = new Date(y, month + 1, 0); return new Date(y, month, x.getDate() - x.getDay()); };
+    return d >= lastSunday(2) && d < lastSunday(9) ? '+02:00' : '+01:00';
+  }
+
+  function eventData(gig) {
+    var address = { '@type': 'PostalAddress', addressCountry: 'BE' };
+    if (gig.city) address.addressLocality = gig.city;
+    var data = {
+      '@type': 'MusicEvent',
+      name: [gig.band.name, gig.event].filter(Boolean).join(': '),
+      startDate: isoDate(gig.date) + (gig.time ? 'T' + gig.time + ':00' + brusselsOffset(gig.date) : ''),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      location: { '@type': 'Place', name: gig.venue || gig.city, address: address },
+      image: SITE + 'img/' + (gig.band.image || 'og.jpg'),
+      performer: [
+        { '@type': 'MusicGroup', name: gig.band.name },
+        { '@type': 'Person', '@id': SITE + '#lorenz', name: 'Lorenz Baele', url: SITE }
+      ],
+      url: SITE + 'agenda.html'
+    };
+    if (gig.tickets) {
+      data.offers = { '@type': 'Offer', url: gig.tickets };
+    } else if (gig.free) {
+      data.isAccessibleForFree = true;
+      data.offers = { '@type': 'Offer', price: 0, priceCurrency: 'EUR', url: SITE + 'agenda.html' };
+    }
+    return data;
+  }
+
+  // Komende openbare optredens die op de pagina staan, als MusicEvent in de head,
+  // zodat Google ze bij de zoekresultaten kan tonen. Privéfeesten blijven erbuiten.
+  function addEventData(gigs) {
+    var list = document.querySelector('[data-gigs]');
+    if (!list) return;
+    var limit = parseInt(list.getAttribute('data-limit'), 10) || Infinity;
+    var shown = upcomingOf(gigs).slice(0, limit).filter(function (g) { return !g.isPrivate && g.place; });
+    if (!shown.length) return;
+    var script = el('script');
+    script.type = 'application/ld+json';
+    script.textContent = JSON.stringify({ '@context': 'https://schema.org', '@graph': shown.map(eventData) });
+    document.head.appendChild(script);
+  }
+
   function init() {
     if (!document.querySelector('[data-gigs], [data-past]')) return;
     var state = { filter: 'all', closedYears: {} };
@@ -299,6 +366,7 @@
     load().then(function (gigs) {
       setLoading(false);
       render(gigs, state.filter, state.closedYears);
+      addEventData(gigs);
 
       var buttons = document.querySelectorAll('.filter[data-filter]');
       Array.prototype.forEach.call(buttons, function (b) {
